@@ -1,0 +1,539 @@
+<html> 
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ewert&family=Rye&display=swap" rel="stylesheet">
+    <title>312 Queue</title>
+    <style>
+      body {
+        background-image: url('./photos/background.jpg');
+        background-size: cover;
+        background-position: center;
+        font-family: Arial, sans-serif;
+      }
+
+    
+      /* Style for the input fields */
+      input[type="text"], textarea {
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid #a6cce6;
+        background-color: #f7f8fa;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      input[type="text"]:focus, textarea:focus {
+        outline: none;
+        border-color: #175891;
+        box-shadow: 0 0 0 3px rgba(53, 122, 183, 0.3);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      /* Placeholder styling */
+      ::placeholder {
+        color: #bbb;
+        font-style: italic;
+      }
+
+      /* Style for the queue buttons */
+      button {
+        font-size: 14px; /* Smaller font size */
+        padding: 8px 16px; /* Adjust padding for a smaller button */
+        border-radius: 20px; /* Round the corners for a "cuter" look */
+        background-color: #92d1fb; /* Blue color */
+        color: white; /* White text */
+        border: none; /* Remove the default border */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        cursor: pointer; /* Change the cursor to a pointer */
+        transition: all 0.3s ease; /* Smooth transition for effects */
+      }
+
+      /* Hover effect for a cuter button interaction */
+      button:hover {
+        background-color: #357ab7; /* Slightly darker blue on hover */
+        transform: scale(1.05); /* Slightly enlarge the button on hover */
+      }
+
+      /* Focus effect for accessibility */
+      button:focus {
+        outline: none; /* Remove the default outline */
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.5); /* Add a blue outline on focus */
+      }
+
+      .queue-entry {
+        margin: 10px 0;
+        font-size: 18px;
+        padding: 15px;
+        background-color: #d6eaf8; /* Light blue background */
+        border-radius: 8px; /* Rounded corners */
+        border: 2px solid #a6cce6; /* Light blue border */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a lifted effect */
+        text-align: left; /* Align text to the left */
+      }
+
+@font-face {
+          font-family: 'MyCustomFont';
+          src: url('fonts/MyFont.otf') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+      }
+
+      p {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .form-container {
+        background-color: #d6eaf8;
+        padding: 20px;
+        border-radius: 12px;
+        width: 320px;
+        margin: 30px auto;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-container h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      label,
+      input,
+      textarea,
+      .checkbox-container {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      input[type="text"],
+      textarea {
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #a6cce6;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4a90e2;
+        color: white;
+        font-size: 1em;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #357ab7;
+      }
+
+      .queue-container {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .queue-entry {
+        margin: 10px auto;
+        padding: 15px;
+        background-color: #d6eaf8;
+        border-radius: 8px;
+        border: 2px solid #a6cce6;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        width: 80%;
+        max-width: 500px;
+      }
+
+      .queue-entry h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.2em;
+      }
+
+      .queue-entry p {
+        margin: 0;
+        font-size: 1em;
+        color: #333;
+      }
+
+      .images-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;  /* Ensures it spans the full width of the parent */
+}
+
+/* New images container - smaller images on top */
+.new-images-container {
+  padding-top: 102px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  gap: 250px;  /* Adjusts space between images */
+  width: 100%;
+  top: 0;
+  z-index: 2;
+}
+
+.image-pair {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.new-images-container img {
+  width: 70px;  /* Increase the size of the new images */
+  height: auto;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Centers the image vertically */
+}
+
+/* Original images container */
+.images-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;  /* Adds 100px space between each original image */
+}
+
+.images-container img {
+  width: 150px;  /* Adjust this for the size of the large images */
+  height: auto;
+  border-radius: 10px;
+  position: relative;
+}
+
+.image-text {
+  position: absolute;
+  top: 60%;  /* Positions the text below the image */
+  text-align: center;
+  margin-top: 57px;  /* Adds space between image and text */
+  font-family: 'Trebuchet MS';
+  font-size: 1.1em;  /* Adjust text size */
+  color: #333;
+  width: -100%;  /* Ensures the text is centered under the image */
+  white-space: nowrap;
+}
+
+      .chat-box {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 300px;
+        height: 50px;
+        background-color: white;
+        border: 2px solid #a6cce6;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        transition: height 0.3s ease;
+      }
+
+      .chat-box-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .chat-box-header h3 {
+        margin: 0;
+        color: #4a90e2;
+      }
+
+      .chat-box-header button {
+        background-color: transparent;
+        border: none;
+        font-size: 16px;
+      }
+
+      h1 {
+        font-family: 'Rye', serif;
+        text-align: center;
+        font-size: 2em;
+        color: #10427a;
+        cursor: pointer;
+        font-size: 3em;
+        padding-top: 40px;
+      }
+      .rye-regular {
+        font-family: "Rye", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      p {
+        font-family: 'Trebuchet MS';
+        text-align: center;
+        font-size: 1.4em;
+        color: #333;
+        padding-bottom: 20px;
+      }
+
+      .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        border-bottom: 1px solid #ccc;
+        padding: 5px;
+        display: none;
+      }
+
+      .chat-input {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        display: none;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 5px;
+      }
+
+      .chat-input button {
+        padding: 5px 10px;
+        background-color: #4a90e2;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .chat-input button:hover {
+        background-color: #357ab7;
+      }
+
+      h2{
+        font-family: 'Trebuchet MS';
+      }
+      
+    </style>
+    <script>
+      let queue = [];
+
+function addToQueue(event) {
+  event.preventDefault(); // Prevent form from submitting normally
+
+  const name = document.getElementById("name").value.trim();
+  const description = document.getElementById("description").value.trim();
+
+  if (name) {
+    queue.push({ name, description }); // Add both name and description to the queue
+    updateQueueDisplay(); // Update the displayed queue
+    updateWaitTime();
+    document.querySelector("form").reset(); // Reset form after submission
+  }
+}
+
+function updateQueueDisplay() {
+  const queueContainer = document.getElementById("queue-list");
+  queueContainer.innerHTML = ""; // Clear the current displayed queue
+
+  queue.forEach((entry, index) => {
+    const entryDiv = document.createElement("div");
+    entryDiv.classList.add("queue-entry");
+
+    const nameElement = document.createElement("h3");
+    nameElement.textContent = `${index + 1}. ${entry.name}`;
+    entryDiv.appendChild(nameElement);
+
+    queueContainer.appendChild(entryDiv);
+  });
+}
+
+function updateWaitTime() {
+  const estimatedTimePerPerson = 5; 
+  const totalEstimatedTime = queue.length * estimatedTimePerPerson;
+  const waitTimeContainer = document.getElementById("wait-time");
+  waitTimeContainer.textContent = `Total Number of People in Queue: ${queue.length}`;
+}
+
+function updateWaitTime() {
+  const waitTimeContainer = document.getElementById("wait-time");
+  const estimatedTimeContainer = document.getElementById("estimated-time");
+
+  const estimatedTimePerPerson = 5; 
+  const totalEstimatedTime = queue.length * estimatedTimePerPerson;
+
+  waitTimeContainer.textContent = `Total Number of People in Queue: ${queue.length}`;
+  estimatedTimeContainer.textContent = `Estimated Wait Time: ${totalEstimatedTime} minutes`;
+}
+
+      function toggleChatBox() {
+        const chatBox = document.getElementById("chat-box");
+        const chatMessages = document.getElementById("chat-messages");
+        const chatInput = document.getElementById("chat-input");
+
+        if (chatBox.style.height === "50px") {
+          chatBox.style.height = "400px";
+          chatMessages.style.display = "block";
+          chatInput.style.display = "flex";
+        } else {
+          chatBox.style.height = "50px";
+          chatMessages.style.display = "none";
+          chatInput.style.display = "none";
+        }
+      }
+
+      function sendMessage() {
+        const chatInput = document.getElementById("chat-input");
+        const chatMessages = document.getElementById("chat-messages");
+        const name = document.getElementById("name").value.trim() || "Anonymous"; // Default to "Anonymous" if no name is entered
+        const message = chatInput.value.trim();
+
+        if (message) {
+          const messageElement = document.createElement("div");
+          messageElement.textContent = `${name}: ${message}`; // Display the name or "Anonymous" before the message
+        const name = document.getElementById("name").value.trim() || "Anonymous";
+        const message = chatInput.querySelector("input").value.trim();
+
+        if (message) {
+          const messageElement = document.createElement("div");
+          messageElement.textContent = `${name}: ${message}`;
+          messageElement.style.padding = "5px";
+          messageElement.style.margin = "5px 0";
+          messageElement.style.background = "#d6eaf8";
+          messageElement.style.borderRadius = "5px";
+          chatMessages.appendChild(messageElement);
+          chatInput.value = ""; // Clear the input field
+          chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+        }
+      }
+          chatInput.querySelector("input").value = "";
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      
+
+        // Toggle chat box open/close
+function toggleChatBox() {
+  const chatBox = document.getElementById("chat-box");
+  const chatMessages = document.getElementById("chat-messages");
+  const chatInput = document.getElementById("chat-input");
+  const inputField = chatInput.querySelector("input");
+
+  if (chatBox.style.height === "50px") { // If minimized
+    chatBox.style.height = "400px"; // Expand chat box
+    chatMessages.style.display = "block"; // Show messages
+    chatInput.style.display = "flex"; // Show input field and send button
+  } else {
+    chatBox.style.height = "50px"; // Minimize chat box
+    chatMessages.style.display = "none"; // Hide messages
+    chatInput.style.display = "none"; // Hide input field and send button
+  }
+}
+
+
+function sendMessage() {
+  const chatInput = document.getElementById("chat-input");
+  const chatMessages = document.getElementById("chat-messages");
+  const name = document.getElementById("name").value.trim() || "Anonymous"; // Default to "Anonymous" if no name is entered
+  const message = chatInput.querySelector("input").value.trim();
+
+  if (message) {
+    const messageElement = document.createElement("div");
+    messageElement.textContent = `${name}: ${message}`; // Display the name or "Anonymous" before the message
+    messageElement.style.padding = "5px";
+    messageElement.style.margin = "5px 0";
+    messageElement.style.background = "#d6eaf8";
+    messageElement.style.borderRadius = "5px";
+    chatMessages.appendChild(messageElement);
+    chatInput.querySelector("input").value = ""; // Clear the input field
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+  }
+}
+const menuButton = document.getElementById("menuButton");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        menuButton.addEventListener("click", () => {
+            const isOpen = sidebar.classList.toggle("open");
+            overlay.classList.toggle("show", isOpen);
+            menuButton.innerHTML = isOpen ? "&times;" : "&#9776;";
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.remove("open");
+            overlay.classList.remove("show");
+            menuButton.innerHTML = "&#9776;";
+        });
+    </script>
+  </head>
+  <body>
+    
+    <div class="overlay" id="overlay"></div>
+    <h1 class = "rye-regular">CS312 TA Help Hours</h1>
+    <p>Location: GDC Room 3.100</p>
+    <p>Office Hours: 2:00 - 6:00 PM</p>
+    
+    <div class="images-wrapper">
+      <!-- New Images Container: These images will appear on top of the old ones -->
+      <div class="new-images-container">
+          <div class="image-pair">
+              <img src="./photos/sophia.jpg" alt="new image 1">
+              <div class="image-text">2:00 - 4:00 PM</div>
+
+          </div>
+          <div class="image-pair">
+              <img src="./photos/caitlin.JPG" alt="new image 2">
+              <div class="image-text">3:00 - 5:00 PM</div>
+          </div>
+          <div class="image-pair">
+              <img src="./photos/tanvi.JPEG" alt="new image 3">
+              <div class="image-text">4:00 - 6:00 PM</div>
+          </div>
+      </div>
+    
+      <!-- Original Images Container -->
+      <div class="images-container">
+          <img src="./photos/wantedPoster.png" alt="poster 1">
+          <img src="./photos/wantedPoster.png" alt="poster 2">
+          <img src="./photos/wantedPoster.png" alt="poster 3">
+      </div>
+    </div>
+
+    <div class="form-container">
+      <h2>Request Help</h2>
+      <form onsubmit="addToQueue(event)">
+        <input type="text" id="name" name="name" placeholder="Enter your name:" required>
+        <input type="text" id="eid" name="eid" placeholder="Enter your EID:" required>
+        <textarea id="description" name="description" placeholder="Brief description of your issue:" required></textarea>
+        <input type="text" id="phone-number" name="phone-number" placeholder="Enter phone number">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="queue-container">
+      <h2>Queue:</h2>
+      <div id="wait-time">Total Number of People in Queue: 0</div>
+      <p id="estimated-time">Estimated Wait Time: 0 minutes</p>
+      <div id="queue-list"></div>
+    </div>
+
+    <div id="chat-box" class="chat-box">
+      <div class="chat-box-header" onclick="toggleChatBox()">
+        <h3>Live Chat</h3>
+        <button>⯆</button> <!-- Arrow icon for opening/closing -->
+      </div>
+      <div id="chat-messages" class="chat-messages"></div>
+      <div id="chat-input" class="chat-input">
+        <input type="text" placeholder="Ask a question...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </body>
+</html>

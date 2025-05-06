@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <!-- Preconnect and link to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ewert&family=Rye&display=swap" rel="stylesheet">
+
+    <title>RoundUp!</title>
+    <style>
+      /* Apply custom font to the .rye-regular class */
+      .rye-regular {
+        font-family: "Rye", serif; /* Use the Rye font */
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Poppins', Arial, sans-serif;
+        height: 100vh;
+        background-image: url('./photos/background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+      }
+
+      /* Background Overlay */
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.4);
+        z-index: -1;
+      }
+
+      .websiteHeader {
+        color: rgb(155, 92, 64);
+        font-size: 100px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-family: 'Rye', serif; /* Apply the Rye font */
+        margin-top: -10px;
+        margin-bottom: 2px;
+        text-shadow: 
+          2px 2px 0 white, 
+          -2px -2px 0 white, 
+          2px -2px 0 white, 
+          -2px 2px 0 white; /* White outline effect */
+      }
+
+      .purpose {
+        max-width: 600px;
+        color: rgb(185, 128, 104);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 30px;
+        line-height: 2;
+        margin-top: 20x;
+        margin-bottom: 2px;
+      }
+
+    .hatButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin: 10px;
+}
+      .hatButton {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        margin: 0px;
+      }
+
+      .hatImage {
+        width: 210px;
+        height: auto;
+        transition: transform 0.3s ease, filter 0.3s ease;
+      }
+
+      .hatText {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 5px black;
+        font-family: 'Arial', sans-serif;
+        z-index: 10;
+      }
+
+      .hatButton:hover .hatImage {
+        transform: scale(1.1) rotate(-5deg);
+        filter: brightness(1.2);
+      }
+
+      .hatButton:hover .hatText {
+        transform: translateX(-50%);
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <!-- HTML Portion -->
+    <center>
+      <h1 class="websiteHeader rye-regular">RoundUp!</h1>
+      <p class="purpose">
+        Welcome to the 312 and 314 help hours queue! Select the course you are currently taking:
+      </p>
+      <button class="hatButton" onclick="navigateTo('312')">
+        <span class="hatText">312</span>
+        <img src="./photos/hat.png" alt="312" class="hatImage">
+      </button>
+      
+      <button class="hatButton" onclick="navigateTo('314')">
+        <span class="hatText">314</span>
+        <img src="./photos/hat.png" alt="314" class="hatImage">
+      </button>
+    </center>
+
+    <script>
+      function navigateTo(course) {
+        window.location.href = course + ".html";
+      }
+    </script>
+  </body>
+</html>

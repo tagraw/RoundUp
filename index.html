@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <!-- CSS Portion -->
+    <title>Roundup!</title>
+    <style>
+      body {
+        background-color: floralwhite;
+      }
+
+      .websiteHeader {
+        color: rgb(147, 223, 249);
+        font-size: 50;
+        font-family: 'Comic Sans MS';
+      }
+
+      .purpose {
+        margin: 10;
+        margin-right: 15;
+        margin-left: 15;
+        color: rgb(147, 223, 249);
+        font-family: 'Times New Roman';
+        font-size: 20;
+      }
+
+      .courseButton {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: rgb(147, 223, 249);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .courseButton:hover {
+        background-color: rgb(100, 180, 220);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HTML Portion -->
+    <center>
+      <h1 class="websiteHeader">Roundup!</h1>
+      <p class="purpose">
+        Welcome to the 312 and 314 help hours queue! To start, select the course you are currently taking:
+      </p>
+      <button class="courseButton" onclick="navigateTo('312')">312</button>
+      <button class="courseButton" onclick="navigateTo('314')">314</button>
+    </center>
+
+    <script>
+      function navigateTo(course) {
+        window.location.href = course + ".html";
+      }
+    </script>
+  </body>
+</html>
