@@ -40,9 +40,9 @@ Students attending help hours often experience:
 > 🥇 **Best Design** — WICS Hackathon 2025  
 > *Praised for its aesthetic, user-friendly UI, and practical impact on student productivity.*
 
-## 📸 Screenshots
+## 📸 Tech Demo
 
-*(Insert screenshots of the UI here — queue page, chat interface, etc.)*
+https://drive.google.com/file/d/1J9E71N3dDiPvGsv2olhzS2tMuG5lPicW/view?usp=sharing 
 
 ## 📍 Future Improvements
 
@@ -52,7 +52,7 @@ Students attending help hours often experience:
 
 ## 🤝 Team
 
-Created by students at the University of Texas at Austin during the 2025 WICS Hackathon.
+Created by Tanvi Agrawal, Caitlin Nguyen and Sophia Tran at the University of Texas at Austin during the 2025 WICS Hackathon.
 
 ---
 
